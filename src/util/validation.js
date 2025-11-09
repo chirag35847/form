@@ -1,4 +1,5 @@
 export function isEmail(value) {
+  console.log(value)
   return value.includes('@');
 }
 
