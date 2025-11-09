@@ -1,8 +1,13 @@
 import { useState } from "react";
 import Input from "./Input";
-import {isEmail} from '../util/validation';
+import {isEmail, isNotEmpty} from '../util/validation';
+import useInput from "../hooks/useInput";
 
 export default function Login() {
+  const {
+    value: emailValue, handleInputChange, handleInputBlur, hasError
+  } = useInput('', (value) => isEmail && isNotEmpty(value))
+
   const [enteredValue, setEnteredValue] = useState({
     email: "",
     password: ""
@@ -53,12 +58,12 @@ export default function Login() {
         <Input
           label="Email"
           id="email"
-          onBlur={(e) => handleBlurEvent('email')}
+          onBlur={handleInputBlur}
           type="email"
           name="email"
-          onChange={(e) => handleFieldChange('email', e.target.value)}
-          value={enteredValue.email}
-          error={isEmailInValid ? "Please enter valid email" :""}
+          onChange={handleInputChange}
+          value={emailValue}
+          error={hasError ? "Please enter valid email" :""}
         />
 
         <div className="control no-margin">
